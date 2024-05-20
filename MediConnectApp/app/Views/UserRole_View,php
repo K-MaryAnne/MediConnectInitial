@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>UserRoles</title>
+</head>
+<body>
+    <h1>UserRoles List</h1>
+    <a href="/userrole/create">Assign Role</a>
+    <table border="1">
+        <tr>
+            <th>User ID</th>
+            <th>Role ID</th>
+            <th>Assigned at</th>
+            <th>Actions</th>
+        </tr>
+        <?php if (!empty($userroles)): ?>
+            <?php foreach ($userroles as $userrole): ?>
+                <tr>
+                    <td><?= $userrole['User_ID'] ?></td>
+                    <td><?= $userrole['Role_ID'] ?></td>
+                    <td><?= $userrole['Assigned at'] ?></td>
+                    <td>
+                        <a href="/userrole/edit/<?= $userrole['User_ID'] ?>">Edit</a>
+                        <a href="/userrole/delete/<?= $userrole['User_ID'] ?>">Delete</a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </table>
+
+    <h1><?= isset($userrole) ? 'Edit UserRole' : 'Assign Role' ?></h1>
+    <form action="<?= isset($userrole) ? '/userrole/update/' . $userrole['User_ID'] : '/userrole/store' ?>" method="post">
+        <label for="User_ID">User ID:</label>
+        <input type="text" name="User_ID" value="<?= isset($userrole) ? $userrole['User_ID'] : '' ?>" required><br>
+
+        <label for="Role_ID">Role ID:</label>
+        <input type="text" name="Role_ID" value="<?= isset($userrole) ? $userrole['Role_ID'] : '' ?>" required><br>
+
+        <button type="submit"><?= isset($userrole) ? 'Update' : 'Assign' ?></button>
+    </form>
+</body>
+</html>
