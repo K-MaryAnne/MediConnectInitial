@@ -6,6 +6,6 @@ class SignUp extends BaseController
 {
     public function index(): string
     {
-        return view('registration');
+        return view('register');
     }
 }

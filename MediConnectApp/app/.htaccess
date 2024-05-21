@@ -1,6 +1,23 @@
-<IfModule authz_core_module>
-	Require all denied
-</IfModule>
-<IfModule !authz_core_module>
-	Deny from all
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /MediConnect/MediConnectApp/  # Adjust this based on your project's base URL
+
+    # Redirect Trailing Slashes...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.+)/$ /$1 [L,R=301]
+
+    # Send Requests To Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php/$1 [L]
+
+    # Restrict access to certain files
+    <FilesMatch "(?i:(^#.*|.+\.(bak|config|dist|fla|inc|ini|log|psd|sh|sql|swp|tif|tiff|tpl))$)">
+        <IfModule mod_authz_core.c>
+            Require all denied
+        </IfModule>
+        <IfModule !mod_authz_core.c>
+            Deny from all
+        </IfModule>
+    </FilesMatch>
 </IfModule>

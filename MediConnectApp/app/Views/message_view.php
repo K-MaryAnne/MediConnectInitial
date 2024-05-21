@@ -5,17 +5,23 @@
     <title>Message</title>
 </head>
 <body>
-    
-        <?php
+    <?php
     if ($message_type === 'activation_success') {
         ?>
         <h1>Account Activated</h1>
         <p>Your account has been activated successfully.</p>
+        <a href="<?php echo site_url('auth/completeProfile'); ?>">Complete Your Profile</a>
         <?php
     } elseif ($message_type === 'activation_failed') {
         ?>
         <h1>Account Activation Failed</h1>
         <p>Sorry, we couldn't activate your account. Please try again later.</p>
+        <a href="<?php echo site_url('register'); ?>">Register Again</a>
+        <?php
+    } elseif ($message_type === 'registration_success') {
+        ?>
+        <h1>Registration Successful</h1>
+        <p>Please check your email to activate your account.</p>
         <?php
     } elseif ($message_type === 'request_password_reset') {
         ?>
@@ -35,7 +41,7 @@
         ?>
         <h1>Reset Password</h1>
         <form action="/reset_password" method="post">
-        <label for="email">Email:</label>
+            <label for="email">Email:</label>
             <input type="email" id="email" name="email" required><br>
             <label for="password">New Password:</label>
             <input type="password" id="password" name="password" required><br>
